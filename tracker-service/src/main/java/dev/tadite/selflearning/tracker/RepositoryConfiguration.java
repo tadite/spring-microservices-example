@@ -1,4 +1,4 @@
-package tadite.selflearning.tracker;
+package dev.tadite.selflearning.tracker;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;

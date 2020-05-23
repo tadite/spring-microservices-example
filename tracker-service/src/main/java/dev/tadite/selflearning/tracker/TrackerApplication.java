@@ -1,4 +1,4 @@
-package tadite.selflearning.tracker;
+package dev.tadite.selflearning.tracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
