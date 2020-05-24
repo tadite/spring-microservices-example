@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/selflearning.iml" filepath="$PROJECT_DIR$/selflearning.iml" />
+      <module fileurl="file://$PROJECT_DIR$/habits.iml" filepath="$PROJECT_DIR$/habits.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracker-service/tracker-service.iml" filepath="$PROJECT_DIR$/tracker-service/tracker-service.iml" />
     </modules>
   </component>

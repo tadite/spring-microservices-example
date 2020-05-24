@@ -10,13 +10,13 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="selflearning" target="1.5" />
+      <module name="habits" target="1.5" />
       <module name="tracker-service" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="selflearning" options="" />
+      <module name="habits" options="" />
       <module name="tracker-service" options="-parameters" />
     </option>
   </component>

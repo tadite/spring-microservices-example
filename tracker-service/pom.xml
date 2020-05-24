@@ -79,7 +79,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>dev.tadite.selflearning.tracker.TrackerApplication</mainClass>
+                    <mainClass>dev.tadite.habits.tracker.TrackerApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

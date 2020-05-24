@@ -1,4 +1,4 @@
-package dev.tadite.selflearning.tracker;
+package dev.tadite.habits.tracker;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
