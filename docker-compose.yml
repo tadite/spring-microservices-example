@@ -1,0 +1,31 @@
+services:
+  #  consul:
+  #    image: consul:1.1.0
+  #    hostname: localhost
+  #    networks:
+  #      - lan
+  #    ports:
+  #      - 8500:8500
+  postgres:
+    image: postgres:11.0
+    hostname: postgres
+    networks:
+      - lan
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: postgres
+  tracker-service:
+    image: habits/tracker-service
+    hostname: tracker
+    networks:
+      - lan
+    ports:
+      - 8080:8080
+#  browserless:
+#    image: browserless/chrome
+#    hostname: localhost
+#    networks:
+#      - lan
+#    ports:
