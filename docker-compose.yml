@@ -1,31 +1,36 @@
+version: '3.5'
 services:
-  #  consul:
-  #    image: consul:1.1.0
-  #    hostname: localhost
-  #    networks:
-  #      - lan
-  #    ports:
-  #      - 8500:8500
   postgres:
-    image: postgres:11.0
+    image: postgres:latest
     hostname: postgres
     networks:
       - lan
     ports:
       - 5432:5432
     environment:
-      POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgress
+      - POSTGRES_DB=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
   tracker-service:
     image: habits/tracker-service
-    hostname: tracker
+    hostname: tracker-service
+    networks:
+      - lan
+    build:
+      context: ./tracker-service
+  api-gateway:
+    image: habits/api-gateway
+    hostname: api-gateway
     networks:
       - lan
     ports:
       - 8080:8080
-#  browserless:
-#    image: browserless/chrome
-#    hostname: localhost
-#    networks:
-#      - lan
-#    ports:
+    build:
+      context: ./api-gateway
+networks:
+  lan:
+    driver: bridge
+volumes:
+  pgdata:
