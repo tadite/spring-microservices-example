@@ -1,21 +1,25 @@
 version: '3.5'
 services:
   postgres:
-    image: postgres:latest
+    image: habits/postgres
     hostname: postgres
     networks:
       - lan
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgress
-      - POSTGRES_DB=postgres
+      - PGUSER=postgres
+      - PGPASSWORD=postgress
+      - PGDATABASE=postgres
     volumes:
       - pgdata:/var/lib/postgresql/data
+    build:
+      context: ./postgres
   tracker-service:
     image: habits/tracker-service
     hostname: tracker-service
+    depends_on:
+      - postgres
     networks:
       - lan
     build:
@@ -25,10 +29,17 @@ services:
     hostname: api-gateway
     networks:
       - lan
-    ports:
-      - 8080:8080
     build:
       context: ./api-gateway
+  frontend:
+    image: habits/frontend
+    hostname: frontend
+    networks:
+      - lan
+    ports:
+      - 80:80
+    build:
+      context: ./frontend
 networks:
   lan:
     driver: bridge
