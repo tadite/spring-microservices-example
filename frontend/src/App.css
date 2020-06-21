@@ -1,0 +1,9 @@
+#root {
+  height: 100%;
+}
+
+.flex-grid {
+  color: white;
+  display: flex;
+  margin: auto -1rem 1rem;
+}
