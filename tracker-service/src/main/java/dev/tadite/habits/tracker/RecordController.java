@@ -1,5 +1,7 @@
 package dev.tadite.habits.tracker;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +13,12 @@ public class RecordController {
 
     public RecordController(RecordRepository recordRepository) {
         this.recordRepository = recordRepository;
+    }
+
+    @GetMapping
+    public ResponseEntity<Page> getAll(Pageable pageable) {
+        Page<Record> res = recordRepository.findAll(pageable);
+        return ResponseEntity.ok(res);
     }
 
     @GetMapping("/{id}")

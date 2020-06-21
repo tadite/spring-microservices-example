@@ -1,6 +1,6 @@
 package dev.tadite.habits.tracker;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface RecordRepository extends CrudRepository<Record, Long> {
+public interface RecordRepository extends PagingAndSortingRepository<Record, Long> {
 }
