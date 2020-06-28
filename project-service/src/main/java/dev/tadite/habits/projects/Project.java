@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -29,7 +28,7 @@ public class Project implements Auditable {
     private String description;
 
     @OneToMany(mappedBy = "project")
-    @OrderBy("createdAt DESC")
+    @OrderBy("id DESC")
     private List<Task> tasks;
 
 }

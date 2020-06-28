@@ -1,14 +1,9 @@
 package dev.tadite.habits.projects;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.tadite.habits.projects.dto.ProjectDto;
 import dev.tadite.habits.projects.dto.TaskCreationRequest;
 import dev.tadite.habits.projects.dto.TaskDto;
 import dev.tadite.habits.projects.matchers.PageMatcher;
-import net.minidev.json.JSONArray;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,18 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -92,10 +84,11 @@ public class TaskIT {
                 .andExpect(jsonPath("id", Matchers.anything()))
                 .andExpect(jsonPath("name", Matchers.equalTo(savedProject.getName())))
                 .andExpect(jsonPath("description", Matchers.equalTo(savedProject.getDescription())))
-                .andExpect(jsonPath("$.tasks",
+                .andExpect(jsonPath("tasks",
                         PageMatcher.fromPageable(PageRequest.of(1, 10),
                                 20,
                                 contentArr -> ((Map) contentArr.get(0)).get("id").equals(20))))
                 .andReturn();
+        System.out.println();
     }
 }

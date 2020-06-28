@@ -17,20 +17,20 @@ public class TaskController {
     }
 
     @GetMapping("/tasks/{taskId}")
-    public ResponseEntity<Task> getById(@PathVariable Integer taskId) {
-        return ResponseEntity.of(taskService.findById(taskId));
+    public ResponseEntity<TaskDto> getById(@PathVariable Integer taskId) {
+        return ResponseEntity.of(TaskDto.fromEntity(taskService.findById(taskId)));
     }
 
     @GetMapping("/projects/{projectId}/tasks")
-    public ResponseEntity<Page> getAllPagedByProject(Pageable pageable, @PathVariable Integer projectId) {
+    public ResponseEntity<Page<TaskDto>> getAllPagedByProject(Pageable pageable, @PathVariable Integer projectId) {
         Page<Task> res = taskService.findAllByProjectId(projectId, pageable);
-        return ResponseEntity.ok(res);
+        return ResponseEntity.ok(TaskDto.fromEntity(res));
     }
 
     @GetMapping("/projects/tasks")
-    public ResponseEntity<Page> getAllPaged(Pageable pageable) {
+    public ResponseEntity<Page<TaskDto>> getAllPaged(Pageable pageable) {
         Page<Task> res = taskService.findAll(pageable);
-        return ResponseEntity.ok(res);
+        return ResponseEntity.ok(TaskDto.fromEntity(res));
     }
 
     @PostMapping("/projects/{projectId}/tasks")

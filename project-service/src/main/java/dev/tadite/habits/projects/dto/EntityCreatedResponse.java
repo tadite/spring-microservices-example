@@ -1,4 +1,4 @@
-package dev.tadite.habits.projects;
+package dev.tadite.habits.projects.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
