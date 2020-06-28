@@ -1,11 +1,13 @@
 package dev.tadite.habits.tracker;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -15,8 +17,9 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Disabled
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
+@ActiveProfiles("dev")
 @AutoConfigureMockMvc
 class RecordControllerTest {
 
@@ -37,12 +40,12 @@ class RecordControllerTest {
         LocalDateTime endDateTime = LocalDateTime.of(2020, 3, 3, 11, 2, 3, 1);
         Record record = recordRepository.save(new Record(null, "1", startDateTime, endDateTime, "desc"));
 
-        mvc.perform(get("/api/records/{id}", record.getId())
+        mvc.perform(get("/records/{id}", record.getId())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].projectId", is(record.getProjectId())));
+                .andExpect(jsonPath("$.projectId", is(record.getProjectId())));
     }
 
 }

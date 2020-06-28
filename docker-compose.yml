@@ -8,9 +8,10 @@ services:
     ports:
       - 5432:5432
     environment:
-      - PGUSER=postgres
-      - PGPASSWORD=postgress
-      - PGDATABASE=postgres
+#      POSTGRES_DB: postgres
+#      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_HOST_AUTH_METHOD: password
     volumes:
       - pgdata:/var/lib/postgresql/data
     build:
@@ -24,6 +25,15 @@ services:
       - lan
     build:
       context: ./tracker-service
+  project-service:
+    image: habits/project-service
+    hostname: project-service
+    depends_on:
+      - postgres
+    networks:
+      - lan
+    build:
+      context: ./project-service
   api-gateway:
     image: habits/api-gateway
     hostname: api-gateway

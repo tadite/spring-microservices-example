@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Record {
 
     @Id
-    private Long id;
+    private Integer id;
     private String projectId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
