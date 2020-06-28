@@ -16,11 +16,20 @@ services:
       - pgdata:/var/lib/postgresql/data
     build:
       context: ./postgres
+  mongo:
+    image: mongo
+    hostname: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - lan
+    volumes:
+      - mongodata:/data/db
   tracker-service:
     image: habits/tracker-service
     hostname: tracker-service
     depends_on:
-      - postgres
+      - mongo
     networks:
       - lan
     build:
@@ -55,3 +64,4 @@ networks:
     driver: bridge
 volumes:
   pgdata:
+  mongodata:

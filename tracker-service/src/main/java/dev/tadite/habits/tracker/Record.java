@@ -4,16 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Document
 public class Record {
 
     @Id
-    private Integer id;
+    private String id;
     private String projectId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;

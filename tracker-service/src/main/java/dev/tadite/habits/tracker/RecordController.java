@@ -1,40 +1,42 @@
 package dev.tadite.habits.tracker;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
+import dev.tadite.habits.tracker.dto.RecordDto;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/records")
 public class RecordController {
 
-    private final RecordRepository recordRepository;
+    private final RecordService recordService;
 
-    public RecordController(RecordRepository recordRepository) {
-        this.recordRepository = recordRepository;
+    public RecordController(RecordService recordService) {
+        this.recordService = recordService;
     }
 
     @GetMapping
-    public ResponseEntity<Page> getAll(Pageable pageable) {
-        Page<Record> res = recordRepository.findAll(pageable);
-        return ResponseEntity.ok(res);
+    public Flux<RecordDto> getAll(@RequestParam(required = false) String projectId,
+                                  @RequestParam(required = false, defaultValue = "0") int page,
+                                  @RequestParam(required = false, defaultValue = "20") int size) {
+
+        Flux<Record> res = recordService.findAll(PageRequest.of(page, size), projectId);
+        return res.map(RecordDto::fromEntity);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getById(@PathVariable Long id) {
-        return ResponseEntity.of(recordRepository.findById(id));
+    public Mono<RecordDto> getById(@PathVariable String id) {
+        return recordService.findById(id).map(RecordDto::fromEntity);
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody Record record) {
-        recordRepository.save(record);
-        return ResponseEntity.ok().build();
+    public Mono<RecordDto> create(@RequestBody Record record) {
+        return recordService.save(record).map(RecordDto::fromEntity);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity removeById(@PathVariable Long id) {
-        recordRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+    public Mono removeById(@PathVariable String id) {
+        return recordService.deleteById(id);
     }
 }
