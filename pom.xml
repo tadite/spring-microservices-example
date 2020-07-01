@@ -15,6 +15,7 @@
     <modules>
         <module>tracker-service</module>
         <module>project-service</module>
+        <module>customer-history-service</module>
         <module>api-gateway</module>
         <module>frontend</module>
     </modules>
