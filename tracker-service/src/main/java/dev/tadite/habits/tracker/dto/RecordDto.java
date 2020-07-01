@@ -13,7 +13,7 @@ import java.util.Optional;
 @Builder
 public class RecordDto {
     private String id;
-    private String projectId;
+    private String taskId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private String description;
@@ -21,7 +21,7 @@ public class RecordDto {
     public static RecordDto fromEntity(Record project) {
         return RecordDto.builder()
                 .id(project.getId())
-                .projectId(project.getProjectId())
+                .taskId(project.getTaskId())
                 .description(project.getDescription())
                 .startTime(project.getStartTime())
                 .endTime(project.getEndTime())

@@ -37,6 +37,7 @@ public class RecordIT {
                 .create(recordDtoMono)
                 .assertNext(recordDto -> {
                     assertEquals(savedRecord.getId(), recordDto.getId());
+                    assertEquals(savedRecord.getTaskId(), "1");
                 })
                 .expectComplete()
                 .verify();

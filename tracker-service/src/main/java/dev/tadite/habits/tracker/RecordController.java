@@ -1,9 +1,9 @@
 package dev.tadite.habits.tracker;
 
 import dev.tadite.habits.tracker.dto.RecordDto;
+import dev.tadite.habits.tracker.dto.RecordsPage;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -17,12 +17,11 @@ public class RecordController {
     }
 
     @GetMapping
-    public Flux<RecordDto> getAll(@RequestParam(required = false) String projectId,
-                                  @RequestParam(required = false, defaultValue = "0") int page,
-                                  @RequestParam(required = false, defaultValue = "20") int size) {
+    public Mono<RecordsPage> getAll(@RequestParam(required = false) String taskId,
+                                    @RequestParam(required = false, defaultValue = "0") int page,
+                                    @RequestParam(required = false, defaultValue = "20") int size) {
 
-        Flux<Record> res = recordService.findAll(PageRequest.of(page, size), projectId);
-        return res.map(RecordDto::fromEntity);
+        return recordService.findAllPage(PageRequest.of(page, size), taskId);
     }
 
     @GetMapping("/{id}")

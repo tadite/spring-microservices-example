@@ -16,7 +16,7 @@ public class Record {
 
     @Id
     private String id;
-    private String projectId;
+    private String taskId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private String description;
