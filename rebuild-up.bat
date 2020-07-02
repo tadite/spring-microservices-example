@@ -1,1 +1,1 @@
-mvn clean install && docker-compose build
+mvn test -Pdev && mvn clean install -DskipTests && docker-compose build

@@ -52,9 +52,9 @@ public class RecordService {
     }
 
     public Mono<Record> save(Record record) {
-        return recordRepository.save(record).handle((rec, recordSynchronousSink) -> {
-            eventsService.publishEvent(eventsMapper.mapSavedRecord(rec));
-            recordSynchronousSink.complete();
-        });
+        Mono<Record> savedRecord = recordRepository.save(record)
+                .doOnSuccess(rec -> eventsService.publishEvent(eventsMapper.mapSavedRecord(rec)));
+
+        return savedRecord;
     }
 }

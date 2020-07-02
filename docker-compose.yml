@@ -8,8 +8,6 @@ services:
     ports:
       - 5432:5432
     environment:
-#      POSTGRES_DB: postgres
-#      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "postgres"
       POSTGRES_HOST_AUTH_METHOD: password
     volumes:
@@ -30,6 +28,7 @@ services:
     hostname: tracker-service
     depends_on:
       - mongo
+      - kafka
     networks:
       - lan
     build:
@@ -43,6 +42,16 @@ services:
       - lan
     build:
       context: ./project-service
+  history-service:
+    image: habits/history-service
+    hostname: history-service
+    depends_on:
+      - mongo
+      - kafka
+    networks:
+      - lan
+    build:
+      context: ./customer-history-service
   api-gateway:
     image: habits/api-gateway
     hostname: api-gateway
@@ -64,7 +73,6 @@ services:
     expose:
       - "2181"
   kafka:
-#    image: wurstmeister/kafka
     build:
       context: ./kafka
     ports:

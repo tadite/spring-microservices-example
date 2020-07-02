@@ -1,21 +1,8 @@
-jaas:
-  config: org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret" user_admin="admin-secret";
 spring:
   profiles:
-    active: dev
+    active: prod
   cloud:
     stream:
-      kafka:
-        binder:
-          configuration:
-            security.protocol: SASL_PLAINTEXT
-            sasl.mechanism: PLAIN
-          jaas:
-            loginModule: org.apache.kafka.common.security.plain.PlainLoginModule
-            controlFlag: required
-            options:
-              username: admin
-              password: admin-secret
       bindings:
         customer-events:
           destination: customer-events

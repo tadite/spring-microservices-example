@@ -12,6 +12,7 @@
         <java.version>11</java.version>
     </properties>
 
+
     <modules>
         <module>tracker-service</module>
         <module>project-service</module>

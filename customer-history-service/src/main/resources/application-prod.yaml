@@ -1,6 +1,22 @@
+jaas:
+  config: org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret" user_admin="admin-secret";
 spring:
   cloud:
     stream:
       kafka:
         binder:
+          configuration:
+            security.protocol: SASL_PLAINTEXT
+            sasl.mechanism: PLAIN
+          jaas:
+            loginModule: org.apache.kafka.common.security.plain.PlainLoginModule
+            controlFlag: required
+            options:
+              username: admin
+              password: admin-secret
           brokers: kafka:9093
+spring.data:
+  mongodb.uri: mongodb://mongo:27017/history
+  mongo.repositories.enabled: true
+
+spring.autoconfigure.exclude: org.springframework.cloud.stream.test.binder.TestSupportBinderAutoConfiguration
