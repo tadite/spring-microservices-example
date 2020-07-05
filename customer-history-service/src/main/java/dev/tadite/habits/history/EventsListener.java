@@ -1,10 +1,12 @@
 package dev.tadite.habits.history;
 
 import dev.tadite.habits.history.events.Event;
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.annotation.StreamListener;
+import dev.tadite.kafka.events.TrackerEvent;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.kafka.receiver.ReceiverRecord;
 
-@EnableBinding(EventsSink.class)
+@Service
 public class EventsListener {
 
     private final EventsService eventsService;
@@ -13,9 +15,13 @@ public class EventsListener {
         this.eventsService = eventsService;
     }
 
-    @StreamListener(EventsSink.INPUT)
-    public void handle(Event event) {
-        System.out.println("Received: " + event);
-        eventsService.saveEvent(event);
+    public Flux<ReceiverRecord<String, TrackerEvent>> handle(Flux<ReceiverRecord<String, TrackerEvent>> receiveFlux) {
+        return receiveFlux.doOnNext(r -> {
+            TrackerEvent trackerEvent = r.value();
+            Event event = new Event(null, trackerEvent.getType(), trackerEvent.getProperties());
+            System.out.println("Received: " + event);
+            eventsService.saveEvent(event)
+                    .subscribe(mongoMono -> r.receiverOffset().acknowledge());
+        });
     }
 }

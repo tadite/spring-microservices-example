@@ -52,9 +52,8 @@ public class RecordService {
     }
 
     public Mono<Record> save(Record record) {
-        Mono<Record> savedRecord = recordRepository.save(record)
-                .doOnSuccess(rec -> eventsService.publishEvent(eventsMapper.mapSavedRecord(rec)));
-
-        return savedRecord;
+        Mono<Record> savedRecord = recordRepository.save(record);
+        return savedRecord.flatMap(rec -> Mono.when(eventsService.publishEvent(eventsMapper.mapSavedRecord(rec)))
+                .thenReturn(rec));
     }
 }

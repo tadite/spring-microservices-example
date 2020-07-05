@@ -1,9 +1,33 @@
-#spring:
-#  cloud:
-#    stream:
-#      kafka:
-#        binder:
-#          brokers: localhost:9092
-spring.data:
-  mongodb.uri: mongodb://localhost:27017/history
-  mongo.repositories.enabled: true
+
+server:
+  port: 8081
+spring:
+  data:
+    mongodb.uri: mongodb://localhost:27017/history
+    mongo.repositories.enabled: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    jaas:
+      enabled: true
+      loginModule: org.apache.kafka.common.security.plain.PlainLoginModule
+      controlFlag: required
+      options:
+        username: admin
+        password: admin-secret
+    properties:
+      security:
+        protocol: SASL_PLAINTEXT
+      sasl:
+        mechanism: PLAIN
+    consumer:
+      group-id: customer-history-1
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: 'dev.tadite.kafka.events'
+#logging:
+#  level:
+#    root: debug

@@ -14,6 +14,7 @@
 
 
     <modules>
+        <module>kafka-events-api</module>
         <module>tracker-service</module>
         <module>project-service</module>
         <module>customer-history-service</module>

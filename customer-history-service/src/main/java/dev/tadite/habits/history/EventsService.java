@@ -3,8 +3,8 @@ package dev.tadite.habits.history;
 import dev.tadite.habits.history.db.EventsRepository;
 import dev.tadite.habits.history.events.Event;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class EventsService {
@@ -15,11 +15,11 @@ public class EventsService {
         this.eventsRepository = eventsRepository;
     }
 
-    public void saveEvent(Event event){
-        eventsRepository.save(event);
+    public Mono<Event> saveEvent(Event event){
+        return eventsRepository.save(event);
     }
 
-    public List<Event> findAll(){
+    public Flux<Event> findAll(){
         return eventsRepository.findAll();
     }
 }

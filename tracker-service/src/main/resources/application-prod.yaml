@@ -1,6 +1,7 @@
 spring:
+  autoconfigure.exclude: org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration
   data:
-    mongodb.uri: mongodb://mongo:27017/history
+    mongodb.uri: mongodb://mongo:27017/tracker
     mongo.repositories.enabled: true
   kafka:
     bootstrap-servers: kafka:9093
@@ -16,12 +17,6 @@ spring:
         protocol: SASL_PLAINTEXT
       sasl:
         mechanism: PLAIN
-    consumer:
-      group-id: customer-history-1
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring:
-          json:
-            trusted:
-              packages: 'dev.tadite.kafka.events'
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
