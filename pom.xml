@@ -15,11 +15,28 @@
 
     <modules>
         <module>kafka-events-api</module>
+        <module>registry-service</module>
+        <module>config-server</module>
         <module>tracker-service</module>
         <module>project-service</module>
         <module>customer-history-service</module>
         <module>api-gateway</module>
         <module>frontend</module>
     </modules>
+
+    <profiles>
+        <profile>
+            <id>backend-only</id>
+            <modules>
+                <module>kafka-events-api</module>
+                <module>registry-service</module>
+                <module>config-server</module>
+                <module>tracker-service</module>
+                <module>project-service</module>
+                <module>customer-history-service</module>
+                <module>api-gateway</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>

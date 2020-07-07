@@ -23,51 +23,6 @@ services:
       - lan
     volumes:
       - mongodata:/data/db
-  tracker-service:
-    image: habits/tracker-service
-    hostname: tracker-service
-    depends_on:
-      - mongo
-      - kafka
-    networks:
-      - lan
-    build:
-      context: ./tracker-service
-  project-service:
-    image: habits/project-service
-    hostname: project-service
-    depends_on:
-      - postgres
-    networks:
-      - lan
-    build:
-      context: ./project-service
-  history-service:
-    image: habits/history-service
-    hostname: history-service
-    depends_on:
-      - mongo
-      - kafka
-    networks:
-      - lan
-    build:
-      context: ./customer-history-service
-  api-gateway:
-    image: habits/api-gateway
-    hostname: api-gateway
-    networks:
-      - lan
-    build:
-      context: ./api-gateway
-  frontend:
-    image: habits/frontend
-    hostname: frontend
-    networks:
-      - lan
-    ports:
-      - 80:80
-    build:
-      context: ./frontend
   zookeeper:
     image: wurstmeister/zookeeper
     expose:
@@ -93,6 +48,80 @@ services:
       - zookeeper
     volumes:
       - kafkadata:/etc/kafka
+  tracker-service:
+    image: habits/tracker-service
+    hostname: tracker-service
+    depends_on:
+      - registry-service
+      - config-server
+      - mongo
+      - kafka
+    networks:
+      - lan
+    build:
+      context: ./tracker-service
+  project-service:
+    image: habits/project-service
+    hostname: project-service
+    depends_on:
+      - registry-service
+      - config-server
+      - postgres
+    networks:
+      - lan
+    build:
+      context: ./project-service
+  history-service:
+    image: habits/history-service
+    hostname: history-service
+    depends_on:
+      - registry-service
+      - config-server
+      - mongo
+      - kafka
+    networks:
+      - lan
+    build:
+      context: ./customer-history-service
+  api-gateway:
+    image: habits/api-gateway
+    hostname: api-gateway
+    depends_on:
+      - registry-service
+      - config-server
+    networks:
+      - lan
+    build:
+      context: ./api-gateway
+  frontend:
+    image: habits/frontend
+    hostname: frontend
+    networks:
+      - lan
+    ports:
+      - 80:80
+    build:
+      context: ./frontend
+  config-server:
+    image: habits/config-server
+    hostname: config-server
+    ports:
+      - "8888:8888"
+    networks:
+      - lan
+    build:
+      context: ./config-server
+  registry-service:
+    image: habits/registry-service
+    hostname: registry-service
+    depends_on:
+      - config-server
+    ports:
+      - "8761:8761"
+    networks:
+      - lan
+    build:
+      context: ./registry-service
 networks:
   lan:
     driver: bridge

@@ -1,0 +1,1 @@
+mvn test -Pdev -Pbackend-only -Dspring.profiles.active=dev && mvn clean install -Pbackend-only -DskipTests && docker-compose build

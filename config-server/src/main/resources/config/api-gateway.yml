@@ -1,0 +1,23 @@
+zuul.routes:
+  tracker-service:
+    path:
+      /tracker/**
+    url:
+      http://tracker-service:8080/
+  project-service:
+    path:
+      /projects/**
+    url:
+      http://project-service:8080/
+  history-service:
+    path:
+      /history/**
+    url:
+      http://history-service:8080/
+
+eureka:
+  instance:
+    prefer-ip-address: false
+  client:
+    serviceUrl:
+      defaultZone: http://registry-service:8761/eureka
