@@ -1,0 +1,30 @@
+schema_name: project
+
+spring:
+  flyway:
+    locations: classpath:dev/tadite/habits/projects/db/migration,filesystem:/db/migration
+    enabled: true
+    baseline-on-migrate: true
+    check-location: false
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    placeholder-prefix: "${"
+    placeholder-replacement: true
+    placeholder-suffix: "}"
+    placeholders.schema_name: ${schema_name}
+  datasource:
+    url: jdbc:postgresql://postgres:5432/postgres?currentSchema=${schema_name}
+    username: postgres
+    password: postgres
+
+hibernate.dialect: org.hibernate.dialect.H2Dialect
+spring.jpa.hibernate.ddl-auto: validate
+
+eureka:
+  instance:
+    prefer-ip-address: false
+  client:
+    serviceUrl:
+      defaultZone: http://registry-service:8761/eureka
+

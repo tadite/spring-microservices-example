@@ -1,0 +1,26 @@
+schema_name: project
+
+spring:
+  cloud:
+    config:
+      enabled: false
+  flyway:
+    locations: classpath:dev/tadite/habits/projects/db/migration,filesystem:/db/migration
+    enabled: true
+    baseline-on-migrate: true
+    check-location: false
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    placeholder-prefix: "${"
+    placeholder-replacement: true
+    placeholder-suffix: "}"
+    placeholders.schema_name: ${schema_name}
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: "jdbc:h2:mem:db;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS ${schema_name}\\;SET SCHEMA ${schema_name}"
+    username: sa
+    password: sa
+
+hibernate.dialect: org.hibernate.dialect.H2Dialect
+spring.jpa.hibernate.ddl-auto: validate

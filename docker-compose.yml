@@ -93,15 +93,15 @@ services:
       - lan
     build:
       context: ./api-gateway
-  frontend:
-    image: habits/frontend
-    hostname: frontend
-    networks:
-      - lan
-    ports:
-      - 80:80
-    build:
-      context: ./frontend
+#  frontend:
+#    image: habits/frontend
+#    hostname: frontend
+#    networks:
+#      - lan
+#    ports:
+#      - 80:80
+#    build:
+#      context: ./frontend
   config-server:
     image: habits/config-server
     hostname: config-server
