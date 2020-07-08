@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ..\kompose-windows-amd64.exe convert -f ..\docker-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: api-gateway
+  name: api-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: api-gateway
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ..\kompose-windows-amd64.exe convert -f ..\docker-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/lan: "true"
+        io.kompose.service: api-gateway
+    spec:
+      containers:
+      - image: habits/api-gateway
+        imagePullPolicy: ""
+        name: api-gateway
+        ports:
+        - containerPort: 8080
+        resources: {}
+      hostname: api-gateway
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}
