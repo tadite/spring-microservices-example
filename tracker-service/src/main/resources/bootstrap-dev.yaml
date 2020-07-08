@@ -1,10 +1,10 @@
 spring:
-  autoconfigure.exclude: org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration
   data:
-    mongodb.uri: mongodb://mongo:27017/tracker
+    mongodb.uri: mongodb://localhost:27017/tracker
     mongo.repositories.enabled: true
+  # use docker-compose up kafka for dev/tests
   kafka:
-    bootstrap-servers: kafka:9093
+    bootstrap-servers: localhost:9092
     jaas:
       enabled: true
       loginModule: org.apache.kafka.common.security.plain.PlainLoginModule

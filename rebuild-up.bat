@@ -1,1 +1,1 @@
-mvn test -Pdev && mvn clean install -DskipTests && docker-compose build
+mvn test -Pdev -Dspring.profiles.active=dev && mvn clean install -DskipTests && docker-compose build

@@ -2,18 +2,18 @@ zuul.routes:
   tracker-service:
     path:
       /tracker/**
-    url:
-      http://tracker-service:8080/
+    serviceId:
+      tracker-service
   project-service:
     path:
       /projects/**
-    url:
-      http://project-service:8080/
+    serviceId:
+      project-service
   history-service:
     path:
       /history/**
-    url:
-      http://history-service:8080/
+    serviceId:
+      customer-history-service
 
 eureka:
   instance:

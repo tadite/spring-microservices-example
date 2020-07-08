@@ -25,11 +25,15 @@ services:
       - mongodata:/data/db
   zookeeper:
     image: wurstmeister/zookeeper
+    networks:
+      - lan
     expose:
       - "2181"
   kafka:
     build:
       context: ./kafka
+    networks:
+      - lan
     ports:
       - "9092:9092"
     expose:
@@ -89,19 +93,23 @@ services:
     depends_on:
       - registry-service
       - config-server
+    ports:
+      - 8080:8080
     networks:
       - lan
     build:
       context: ./api-gateway
-#  frontend:
-#    image: habits/frontend
-#    hostname: frontend
-#    networks:
-#      - lan
-#    ports:
-#      - 80:80
-#    build:
-#      context: ./frontend
+  frontend:
+    image: habits/frontend
+    hostname: frontend
+    depends_on:
+      - api-gateway
+    networks:
+      - lan
+    ports:
+      - 80:80
+    build:
+      context: ./frontend
   config-server:
     image: habits/config-server
     hostname: config-server

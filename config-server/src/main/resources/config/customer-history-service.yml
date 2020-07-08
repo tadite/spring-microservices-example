@@ -4,18 +4,6 @@ spring:
     mongo.repositories.enabled: true
   kafka:
     bootstrap-servers: kafka:9093
-    jaas:
-      enabled: true
-      loginModule: org.apache.kafka.common.security.plain.PlainLoginModule
-      controlFlag: required
-      options:
-        username: admin
-        password: admin-secret
-    properties:
-      security:
-        protocol: SASL_PLAINTEXT
-      sasl:
-        mechanism: PLAIN
     consumer:
       group-id: customer-history-1
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -25,3 +13,10 @@ spring:
           json:
             trusted:
               packages: 'dev.tadite.kafka.events'
+
+eureka:
+  instance:
+    prefer-ip-address: false
+  client:
+    serviceUrl:
+      defaultZone: http://registry-service:8761/eureka

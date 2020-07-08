@@ -21,7 +21,7 @@
         <module>project-service</module>
         <module>customer-history-service</module>
         <module>api-gateway</module>
-<!--        <module>frontend</module>-->
+        <module>frontend</module>
     </modules>
 
     <profiles>
